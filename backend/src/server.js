@@ -2,9 +2,19 @@ import express from 'express';
 import {ENV} from "./lib/env.js";
 import path from "path";
 import { connectDB } from "./lib/db.js";
+import cors from "cors";
+import {serve} from "/innjest/express";
 
 const app = express();
 const __dirname = path.resolve();
+
+//middlewares
+app.use(express.json());
+// credentials: true :-> server allows browser(frontend) to include cookie in requests
+app.use(cors({ origin: ENV.CLIENT_URL, credentials: true }));
+
+
+app.use("/api/inngest", serve({ client: inngest, functions }));
 
 console.log('Environment Variables:', ENV.PORT)
 
