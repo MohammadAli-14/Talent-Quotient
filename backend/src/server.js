@@ -8,6 +8,7 @@ import { clerkMiddleware } from '@clerk/express'
 import { inngest, functions } from "./lib/inngest.js";
 // import { protectRoute } from './middleware/protectRoute.js';
 import chatRoutes from './routes/chatRoutes.js';
+import sessionRoute from './routes/sessionRoute.js';
 
 const app = express();
 const __dirname = path.resolve();
@@ -19,6 +20,8 @@ app.use(clerkMiddleware()); //this adds the Clerk middleware to handle authentic
 //add auth field to the request object: req.auth()
 app.use("/api/inngest", serve({ client: inngest, functions }));
 app.use('/api/chats', chatRoutes);
+app.use('/api/sessions', sessionRoute);
+
 
 app.get('/health', (req, res) => {
    res.status(200).json({ message: 'Api is up & running' });
