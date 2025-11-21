@@ -111,6 +111,7 @@ export async function joinSession(req, res) {
     }
 
     // check if session is already full - has a participant
+    //409 operation cannot be completed due to a conflict with the current state of the resource
     if (session.participant) return res.status(409).json({ message: "Session is full" });
 
     session.participant = userId;
